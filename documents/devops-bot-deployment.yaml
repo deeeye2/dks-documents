@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-bot-deployment
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-bot
+  template:
+    metadata:
+      labels:
+        app: devops-bot
+    spec:
+      containers:
+      - name: devops-bot
+        image: devopsbotofficial/devops-bot:latest
+        ports:
+        - containerPort: 4102
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-bot-service
+  namespace: default
+spec:
+  selector:
+    app: devops-bot
+  ports:
+  - protocol: TCP
+    port: 4102         # Service port
+    targetPort: 4102   # Container port
+    nodePort: 30102    # Node port (accessible externally)
+  type: NodePort
