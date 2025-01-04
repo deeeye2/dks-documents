@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-bot-deployment
-  namespace: default
+  namespace: webapps
 spec:
   replicas: 3
   selector:
@@ -30,7 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: devops-bot-service
-  namespace: default
+  namespace: webapps
 spec:
   selector:
     app: devops-bot
